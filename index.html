@@ -97,7 +97,6 @@
       border-radius: 10px;
       cursor: pointer;
       margin-top: 8px;
-      transition: background 0.2s;
     }
 
     button:active {
@@ -136,6 +135,11 @@
       font-size: 1.15rem;
       font-weight: 700;
       color: #1e40af;
+    }
+
+    .result-value.highlight {
+      color: #059669;
+      font-size: 1.25rem;
     }
 
     .disclaimer {
@@ -186,6 +190,7 @@
       <p>Herramientas gratuitas para trabajadores en EE. UU.</p>
     </header>
 
+    <!-- Calculadora de Salario -->
     <div class="card">
       <h2>Calculadora de Salario</h2>
 
@@ -199,9 +204,9 @@
         <input type="number" id="hours" placeholder="Ej: 40" step="0.5" min="0" inputmode="decimal">
       </div>
 
-      <button onclick="calcular()">Calcular</button>
+      <button onclick="calcularSalario()">Calcular</button>
 
-      <div class="results" id="results">
+      <div class="results" id="results-salario">
         <div class="result-item">
           <span class="result-label">Salario semanal</span>
           <span class="result-value" id="weekly">$0.00</span>
@@ -220,14 +225,56 @@
       </div>
     </div>
 
+    <!-- Calculadora de Horas Extra -->
+    <div class="card">
+      <h2>Calculadora de Horas Extra</h2>
+
+      <div class="form-group">
+        <label for="ot-hourly">Pago por hora normal (USD)</label>
+        <input type="number" id="ot-hourly" placeholder="Ej: 18.50" step="0.01" min="0" inputmode="decimal">
+      </div>
+
+      <div class="form-group">
+        <label for="ot-hours">Horas trabajadas esta semana</label>
+        <input type="number" id="ot-hours" placeholder="Ej: 48" step="0.5" min="0" inputmode="decimal">
+      </div>
+
+      <button onclick="calcularOvertime()">Calcular horas extra</button>
+
+      <div class="results" id="results-overtime">
+        <div class="result-item">
+          <span class="result-label">Horas normales (hasta 40)</span>
+          <span class="result-value" id="reg-hours">0</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Horas extra</span>
+          <span class="result-value" id="ot-hours-result">0</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Pago horas normales</span>
+          <span class="result-value" id="reg-pay">$0.00</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Pago horas extra (1.5x)</span>
+          <span class="result-value" id="ot-pay">$0.00</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Total a recibir</span>
+          <span class="result-value highlight" id="total-pay">$0.00</span>
+        </div>
+        <p class="disclaimer">
+          * Según la ley federal de EE.UU.: horas extra se pagan a 1.5 veces después de 40 horas semanales. Cantidades brutas aproximadas antes de impuestos. Algunas empresas o estados pueden tener reglas diferentes.
+        </p>
+      </div>
+    </div>
+
     <div class="card future">
       <strong>Próximas herramientas</strong>
       <ul>
-        <li>Calculadora de horas trabajadas</li>
-        <li>Calculadora de horas extra (overtime)</li>
-        <li>Generador de CV</li>
         <li>Conversor USD / MXN</li>
         <li>Calculadora de presupuesto para renta</li>
+        <li>Calculadora de horas trabajadas</li>
+        <li>Generador de CV</li>
         <li>Plantillas para solicitudes de empleo</li>
       </ul>
     </div>
@@ -238,19 +285,39 @@
   </div>
 
   <script>
-    function calcular() {
+    function calcularSalario() {
       const hourly = parseFloat(document.getElementById('hourly').value) || 0;
       const hours = parseFloat(document.getElementById('hours').value) || 0;
 
       const weekly = hourly * hours;
-      const monthly = weekly * 4.333; // promedio de semanas por mes
+      const monthly = weekly * 4.333;
       const annual = weekly * 52;
 
       document.getElementById('weekly').textContent = '$' + weekly.toFixed(2);
       document.getElementById('monthly').textContent = '$' + monthly.toFixed(2);
       document.getElementById('annual').textContent = '$' + annual.toFixed(2);
 
-      document.getElementById('results').classList.add('show');
+      document.getElementById('results-salario').classList.add('show');
+    }
+
+    function calcularOvertime() {
+      const hourly = parseFloat(document.getElementById('ot-hourly').value) || 0;
+      const totalHours = parseFloat(document.getElementById('ot-hours').value) || 0;
+
+      const regularHours = Math.min(totalHours, 40);
+      const overtimeHours = Math.max(0, totalHours - 40);
+
+      const regularPay = regularHours * hourly;
+      const overtimePay = overtimeHours * hourly * 1.5;
+      const totalPay = regularPay + overtimePay;
+
+      document.getElementById('reg-hours').textContent = regularHours.toFixed(1);
+      document.getElementById('ot-hours-result').textContent = overtimeHours.toFixed(1);
+      document.getElementById('reg-pay').textContent = '$' + regularPay.toFixed(2);
+      document.getElementById('ot-pay').textContent = '$' + overtimePay.toFixed(2);
+      document.getElementById('total-pay').textContent = '$' + totalPay.toFixed(2);
+
+      document.getElementById('results-overtime').classList.add('show');
     }
   </script>
 </body>
