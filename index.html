@@ -1,324 +1,736 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WorkTools USA - Herramientas gratuitas para trabajadores</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="WorkTools USA: calculadoras gratuitas para trabajadores en Estados Unidos.">
+<meta name="theme-color" content="#155eef">
+<title>WorkTools USA | Herramientas para trabajadores</title>
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: #f0f4f8;
-      color: #1a202c;
-      line-height: 1.5;
-      padding: 16px;
-      min-height: 100vh;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    .container {
-      max-width: 480px;
-      margin: 0 auto;
-    }
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:#f6f8fc;
+color:#132238;
+line-height:1.55;
+}
 
-    header {
-      text-align: center;
-      margin-bottom: 28px;
-      padding-top: 12px;
-    }
+.container{
+width:min(100% - 28px,920px);
+margin:auto;
+}
 
-    header h1 {
-      font-size: 1.8rem;
-      color: #1e40af;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
+header{padding:18px 0}
 
-    header p {
-      font-size: 1rem;
-      color: #4a5568;
-    }
+.nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+}
 
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      margin-bottom: 24px;
-    }
+.brand{
+font-weight:850;
+font-size:1.08rem;
+}
 
-    .card h2 {
-      font-size: 1.25rem;
-      color: #1e40af;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+.navlinks{
+display:flex;
+gap:14px;
+font-size:.86rem;
+}
 
-    .form-group {
-      margin-bottom: 18px;
-    }
+.navlinks a{
+text-decoration:none;
+color:#637187;
+}
 
-    label {
-      display: block;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 6px;
-    }
+.hero{
+padding:42px 0 28px;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 1.1rem;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      background: #f7fafc;
-      -webkit-appearance: none;
-    }
+.badge{
+display:inline-block;
+background:#edf3ff;
+color:#155eef;
+font-size:.76rem;
+font-weight:800;
+padding:6px 10px;
+border-radius:999px;
+margin-bottom:14px;
+}
 
-    input:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background: white;
-    }
+.hero h1{
+font-size:clamp(2.15rem,9vw,4rem);
+line-height:1.03;
+letter-spacing:-.05em;
+}
 
-    button {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: white;
-      background: #2563eb;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 8px;
-    }
+.hero p{
+color:#637187;
+font-size:1rem;
+margin-top:14px;
+}
 
-    button:active {
-      background: #1d4ed8;
-    }
+.section-head{
+margin:18px 0 12px;
+}
 
-    .results {
-      display: none;
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px solid #e2e8f0;
-    }
+.section-head h2{
+font-size:1.35rem;
+}
 
-    .results.show {
-      display: block;
-    }
+.section-head p{
+color:#637187;
+font-size:.9rem;
+}
 
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #edf2f7;
-    }
+.tools-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:14px;
+}
 
-    .result-item:last-child {
-      border-bottom: none;
-    }
+.tool-card,.card{
+background:#fff;
+border:1px solid rgba(19,34,56,.07);
+border-radius:20px;
+box-shadow:0 10px 30px rgba(16,35,61,.08);
+}
 
-    .result-label {
-      font-size: 0.95rem;
-      color: #4a5568;
-    }
+.tool-card{
+padding:18px;
+}
 
-    .result-value {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #1e40af;
-    }
+.tool-icon{
+font-size:1.45rem;
+margin-bottom:8px;
+}
 
-    .result-value.highlight {
-      color: #059669;
-      font-size: 1.25rem;
-    }
+.tool-card h3{
+font-size:1rem;
+}
 
-    .disclaimer {
-      margin-top: 16px;
-      font-size: 0.8rem;
-      color: #718096;
-      text-align: center;
-      line-height: 1.4;
-    }
+.tool-card p{
+color:#637187;
+font-size:.86rem;
+margin-top:4px;
+}
 
-    .future {
-      text-align: center;
-      color: #718096;
-      font-size: 0.9rem;
-    }
+.card{
+padding:21px;
+margin:18px 0;
+}
 
-    .future ul {
-      list-style: none;
-      margin-top: 12px;
-      text-align: left;
-    }
+.card h2{
+font-size:1.25rem;
+margin-bottom:17px;
+}
 
-    .future li {
-      padding: 6px 0;
-      padding-left: 20px;
-      position: relative;
-    }
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
 
-    .future li::before {
-      content: "•";
-      color: #3b82f6;
-      position: absolute;
-      left: 0;
-    }
+.field{
+margin-bottom:13px;
+}
 
-    footer {
-      text-align: center;
-      margin-top: 32px;
-      font-size: 0.85rem;
-      color: #a0aec0;
-    }
-  </style>
+label{
+display:block;
+font-size:.88rem;
+font-weight:750;
+margin-bottom:7px;
+}
+
+input{
+width:100%;
+padding:13px;
+border:1.5px solid #e4e9f1;
+border-radius:12px;
+background:#fbfcfe;
+color:#132238;
+font-size:1rem;
+}
+
+input:focus{
+outline:none;
+border-color:#155eef;
+}
+
+button{
+width:100%;
+border:0;
+border-radius:12px;
+background:#155eef;
+color:#fff;
+padding:14px 16px;
+font-size:1rem;
+font-weight:800;
+}
+
+.results{
+display:none;
+margin-top:19px;
+padding-top:17px;
+border-top:1px solid #e4e9f1;
+}
+
+.results.show{
+display:block;
+}
+
+.result-row{
+display:flex;
+justify-content:space-between;
+gap:12px;
+padding:10px 0;
+border-bottom:1px solid #eef1f5;
+}
+
+.result-label{
+color:#637187;
+font-size:.9rem;
+}
+
+.result-value{
+font-weight:800;
+}
+
+.highlight{
+color:#087f5b;
+font-size:1.2rem;
+}
+
+.note{
+color:#637187;
+font-size:.76rem;
+margin-top:12px;
+}
+
+.error{
+display:none;
+color:#b42318;
+background:#fff0ee;
+border-radius:10px;
+padding:9px 11px;
+font-size:.82rem;
+margin-top:10px;
+}
+
+.error.show{
+display:block;
+}
+
+.future-list{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+list-style:none;
+}
+
+.future-list li{
+background:#f8fafc;
+border:1px solid #e4e9f1;
+border-radius:11px;
+padding:10px;
+font-size:.85rem;
+color:#637187;
+}
+
+.info{
+background:#edf3ff;
+border-radius:15px;
+padding:15px;
+color:#24426f;
+font-size:.84rem;
+margin-top:14px;
+}
+
+footer{
+padding:28px 0 42px;
+color:#637187;
+font-size:.8rem;
+text-align:center;
+}
+
+@media(max-width:640px){
+.tools-grid,.form-grid,.future-list{
+grid-template-columns:1fr;
+}
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <header>
-      <h1>WorkTools USA</h1>
-      <p>Herramientas gratuitas para trabajadores en EE. UU.</p>
-    </header>
 
-    <!-- Calculadora de Salario -->
-    <div class="card">
-      <h2>Calculadora de Salario</h2>
+<div class="container">
 
-      <div class="form-group">
-        <label for="hourly">Pago por hora (USD)</label>
-        <input type="number" id="hourly" placeholder="Ej: 18.50" step="0.01" min="0" inputmode="decimal">
-      </div>
+<header>
+<div class="nav">
+<div class="brand">WorkTools USA</div>
 
-      <div class="form-group">
-        <label for="hours">Horas trabajadas por semana</label>
-        <input type="number" id="hours" placeholder="Ej: 40" step="0.5" min="0" inputmode="decimal">
-      </div>
+<nav class="navlinks">
+<a href="#herramientas">Herramientas</a>
+<a href="#proximas">Próximas</a>
+</nav>
 
-      <button onclick="calcularSalario()">Calcular</button>
+</div>
+</header>
 
-      <div class="results" id="results-salario">
-        <div class="result-item">
-          <span class="result-label">Salario semanal</span>
-          <span class="result-value" id="weekly">$0.00</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Salario mensual (aprox.)</span>
-          <span class="result-value" id="monthly">$0.00</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Salario anual</span>
-          <span class="result-value" id="annual">$0.00</span>
-        </div>
-        <p class="disclaimer">
-          * Cantidades brutas aproximadas antes de impuestos y deducciones.
-        </p>
-      </div>
-    </div>
+<section class="hero">
 
-    <!-- Calculadora de Horas Extra -->
-    <div class="card">
-      <h2>Calculadora de Horas Extra</h2>
+<span class="badge">GRATIS · MÓVIL · SIMPLE</span>
 
-      <div class="form-group">
-        <label for="ot-hourly">Pago por hora normal (USD)</label>
-        <input type="number" id="ot-hourly" placeholder="Ej: 18.50" step="0.01" min="0" inputmode="decimal">
-      </div>
+<h1>
+Herramientas útiles para trabajadores en EE. UU.
+</h1>
 
-      <div class="form-group">
-        <label for="ot-hours">Horas trabajadas esta semana</label>
-        <input type="number" id="ot-hours" placeholder="Ej: 48" step="0.5" min="0" inputmode="decimal">
-      </div>
+<p>
+Calcula tu salario, horas extra, horas trabajadas y convierte dólares a pesos desde tu teléfono.
+</p>
 
-      <button onclick="calcularOvertime()">Calcular horas extra</button>
+</section>
 
-      <div class="results" id="results-overtime">
-        <div class="result-item">
-          <span class="result-label">Horas normales (hasta 40)</span>
-          <span class="result-value" id="reg-hours">0</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Horas extra</span>
-          <span class="result-value" id="ot-hours-result">0</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Pago horas normales</span>
-          <span class="result-value" id="reg-pay">$0.00</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Pago horas extra (1.5x)</span>
-          <span class="result-value" id="ot-pay">$0.00</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Total a recibir</span>
-          <span class="result-value highlight" id="total-pay">$0.00</span>
-        </div>
-        <p class="disclaimer">
-          * Según la ley federal de EE.UU.: horas extra se pagan a 1.5 veces después de 40 horas semanales. Cantidades brutas aproximadas antes de impuestos. Algunas empresas o estados pueden tener reglas diferentes.
-        </p>
-      </div>
-    </div>
+<section id="herramientas">
 
-    <div class="card future">
-      <strong>Próximas herramientas</strong>
-      <ul>
-        <li>Conversor USD / MXN</li>
-        <li>Calculadora de presupuesto para renta</li>
-        <li>Calculadora de horas trabajadas</li>
-        <li>Generador de CV</li>
-        <li>Plantillas para solicitudes de empleo</li>
-      </ul>
-    </div>
+<div class="section-head">
+<h2>Herramientas</h2>
+<p>Elige una herramienta y calcula en segundos.</p>
+</div>
 
-    <footer>
-      WorkTools USA · Herramientas gratuitas
-    </footer>
-  </div>
+<div class="tools-grid">
 
-  <script>
-    function calcularSalario() {
-      const hourly = parseFloat(document.getElementById('hourly').value) || 0;
-      const hours = parseFloat(document.getElementById('hours').value) || 0;
+<div class="tool-card">
+<div class="tool-icon">💵</div>
+<h3>Salario</h3>
+<p>Ingresos semanales, mensuales y anuales.</p>
+</div>
 
-      const weekly = hourly * hours;
-      const monthly = weekly * 4.333;
-      const annual = weekly * 52;
+<div class="tool-card">
+<div class="tool-icon">⏱️</div>
+<h3>Horas extra</h3>
+<p>Estimación de overtime después de 40 horas.</p>
+</div>
 
-      document.getElementById('weekly').textContent = '$' + weekly.toFixed(2);
-      document.getElementById('monthly').textContent = '$' + monthly.toFixed(2);
-      document.getElementById('annual').textContent = '$' + annual.toFixed(2);
+<div class="tool-card">
+<div class="tool-icon">🕒</div>
+<h3>Horas trabajadas</h3>
+<p>Calcula tu tiempo real con descansos.</p>
+</div>
 
-      document.getElementById('results-salario').classList.add('show');
-    }
+<div class="tool-card">
+<div class="tool-icon">💱</div>
+<h3>USD / MXN</h3>
+<p>Convierte dólares y pesos con tu tasa.</p>
+</div>
 
-    function calcularOvertime() {
-      const hourly = parseFloat(document.getElementById('ot-hourly').value) || 0;
-      const totalHours = parseFloat(document.getElementById('ot-hours').value) || 0;
+</div>
 
-      const regularHours = Math.min(totalHours, 40);
-      const overtimeHours = Math.max(0, totalHours - 40);
+<div class="card">
 
-      const regularPay = regularHours * hourly;
-      const overtimePay = overtimeHours * hourly * 1.5;
-      const totalPay = regularPay + overtimePay;
+<h2>Calculadora de salario</h2>
 
-      document.getElementById('reg-hours').textContent = regularHours.toFixed(1);
-      document.getElementById('ot-hours-result').textContent = overtimeHours.toFixed(1);
-      document.getElementById('reg-pay').textContent = '$' + regularPay.toFixed(2);
-      document.getElementById('ot-pay').textContent = '$' + overtimePay.toFixed(2);
-      document.getElementById('total-pay').textContent = '$' + totalPay.toFixed(2);
+<div class="form-grid">
 
-      document.getElementById('results-overtime').classList.add('show');
-    }
-  </script>
+<div class="field">
+<label>Pago por hora (USD)</label>
+<input id="hourly" type="number" min="0" step="0.01" placeholder="Ej. 18.50">
+</div>
+
+<div class="field">
+<label>Horas por semana</label>
+<input id="hours" type="number" min="0" max="168" step="0.5" placeholder="Ej. 40">
+</div>
+
+</div>
+
+<button onclick="calcularSalario()">Calcular salario</button>
+
+<div class="error" id="salary-error">
+Introduce valores válidos.
+</div>
+
+<div class="results" id="results-salario">
+
+<div class="result-row">
+<span class="result-label">Semanal</span>
+<span class="result-value" id="weekly">$0.00</span>
+</div>
+
+<div class="result-row">
+<span class="result-label">Mensual aprox.</span>
+<span class="result-value" id="monthly">$0.00</span>
+</div>
+
+<div class="result-row">
+<span class="result-label">Anual</span>
+<span class="result-value" id="annual">$0.00</span>
+</div>
+
+<p class="note">
+Estimación de salario bruto antes de impuestos y deducciones.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Calculadora de horas extra</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Pago normal por hora (USD)</label>
+<input id="ot-hourly" type="number" min="0" step="0.01" placeholder="Ej. 18.50">
+</div>
+
+<div class="field">
+<label>Horas esta semana</label>
+<input id="ot-hours" type="number" min="0" max="168" step="0.5" placeholder="Ej. 48">
+</div>
+
+</div>
+
+<button onclick="calcularOvertime()">
+Calcular overtime
+</button>
+
+<div class="error" id="ot-error">
+Introduce valores válidos.
+</div>
+
+<div class="results" id="results-overtime">
+
+<div class="result-row">
+<span class="result-label">Horas normales</span>
+<span class="result-value" id="reg-hours">0</span>
+</div>
+
+<div class="result-row">
+<span class="result-label">Horas extra</span>
+<span class="result-value" id="ot-hours-result">0</span>
+</div>
+
+<div class="result-row">
+<span class="result-label">Pago normal</span>
+<span class="result-value" id="reg-pay">$0.00</span>
+</div>
+
+<div class="result-row">
+<span class="result-label">Pago overtime (1.5×)</span>
+<span class="result-value" id="ot-pay">$0.00</span>
+</div>
+
+<div class="result-row">
+<span class="result-label">Total estimado</span>
+<span class="result-value highlight" id="total-pay">$0.00</span>
+</div>
+
+<p class="note">
+Estimación general. Las reglas pueden variar según el trabajo, estado y situación laboral.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Calculadora de horas trabajadas</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Hora de entrada</label>
+<input id="start" type="time">
+</div>
+
+<div class="field">
+<label>Hora de salida</label>
+<input id="end" type="time">
+</div>
+
+</div>
+
+<div class="field">
+
+<label>Descanso (minutos)</label>
+
+<input id="break" type="number" min="0" step="1" value="30">
+
+</div>
+
+<button onclick="calcularHoras()">
+Calcular horas
+</button>
+
+<div class="error" id="hours-error">
+Selecciona una hora de entrada y salida válidas.
+</div>
+
+<div class="results" id="results-horas">
+
+<div class="result-row">
+
+<span class="result-label">
+Tiempo trabajado
+</span>
+
+<span class="result-value highlight" id="worked-hours">
+0 h 0 min
+</span>
+
+</div>
+
+<p class="note">
+También funciona si tu turno termina después de medianoche.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Conversor USD / MXN</h2>
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>Dólares (USD)</label>
+
+<input id="usd" type="number" min="0" step="0.01" placeholder="Ej. 100">
+
+</div>
+
+<div class="field">
+
+<label>1 USD = MXN</label>
+
+<input id="rate" type="number" min="0.01" step="0.01" value="18.50">
+
+</div>
+
+</div>
+
+<button onclick="convertirMXN()">
+Convertir
+</button>
+
+<div class="error" id="mxn-error">
+Introduce un monto y una tasa válidos.
+</div>
+
+<div class="results" id="results-mxn">
+
+<div class="result-row">
+
+<span class="result-label">
+Resultado
+</span>
+
+<span class="result-value highlight" id="mxn-result">
+$0.00 MXN
+</span>
+
+</div>
+
+<p class="note">
+La tasa es editable porque el tipo de cambio cambia.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="info">
+
+<strong>Nota:</strong>
+Estas herramientas ofrecen estimaciones informativas.
+Los impuestos, beneficios, contratos y leyes pueden cambiar el resultado real.
+
+</div>
+
+
+<section id="proximas" class="card">
+
+<h2>Próximas herramientas</h2>
+
+<ul class="future-list">
+
+<li>🏠 Presupuesto para renta</li>
+<li>📄 Generador de CV</li>
+<li>📝 Plantillas de empleo</li>
+<li>📍 Herramientas por estado</li>
+
+</ul>
+
+</section>
+
+
+<footer>
+
+WorkTools USA · Herramientas gratuitas
+
+</footer>
+
+</div>
+
+
+<script>
+
+function money(n){
+return n.toLocaleString("en-US",{
+style:"currency",
+currency:"USD"
+});
+}
+
+
+function showError(id,show){
+document.getElementById(id).classList.toggle("show",show);
+}
+
+
+function calcularSalario(){
+
+const r=Number(document.getElementById("hourly").value);
+const h=Number(document.getElementById("hours").value);
+
+if(!Number.isFinite(r)||!Number.isFinite(h)||r<0||h<0||h>168){
+showError("salary-error",true);
+return;
+}
+
+showError("salary-error",false);
+
+const weekly=r*h;
+
+document.getElementById("weekly").textContent=money(weekly);
+
+document.getElementById("monthly").textContent=
+money(weekly*52/12);
+
+document.getElementById("annual").textContent=
+money(weekly*52);
+
+document.getElementById("results-salario").classList.add("show");
+
+}
+
+
+function calcularOvertime(){
+
+const r=Number(document.getElementById("ot-hourly").value);
+const t=Number(document.getElementById("ot-hours").value);
+
+if(!Number.isFinite(r)||!Number.isFinite(t)||r<0||t<0||t>168){
+showError("ot-error",true);
+return;
+}
+
+showError("ot-error",false);
+
+const regular=Math.min(t,40);
+const extra=Math.max(0,t-40);
+
+const regularPay=regular*r;
+const overtimePay=extra*r*1.5;
+
+document.getElementById("reg-hours").textContent=
+regular.toFixed(1);
+
+document.getElementById("ot-hours-result").textContent=
+extra.toFixed(1);
+
+document.getElementById("reg-pay").textContent=
+money(regularPay);
+
+document.getElementById("ot-pay").textContent=
+money(overtimePay);
+
+document.getElementById("total-pay").textContent=
+money(regularPay+overtimePay);
+
+document.getElementById("results-overtime").classList.add("show");
+
+}
+
+
+function calcularHoras(){
+
+const start=document.getElementById("start").value;
+const end=document.getElementById("end").value;
+
+const breakMinutes=
+Math.max(0,Number(document.getElementById("break").value)||0);
+
+if(!start||!end){
+
+showError("hours-error",true);
+return;
+
+}
+
+showError("hours-error",false);
+
+const [sh,sm]=start.split(":").map(Number);
+const [eh,em]=end.split(":").map(Number);
+
+let minutes=(eh*60+em)-(sh*60+sm);
+
+if(minutes<0){
+minutes+=1440;
+}
+
+minutes=Math.max(0,minutes-breakMinutes);
+
+document.getElementById("worked-hours").textContent=
+Math.floor(minutes/60)+" h "+(minutes%60)+" min";
+
+document.getElementById("results-horas").classList.add("show");
+
+}
+
+
+function convertirMXN(){
+
+const usd=Number(document.getElementById("usd").value);
+const rate=Number(document.getElementById("rate").value);
+
+if(!Number.isFinite(usd)||usd<0||!Number.isFinite(rate)||rate<=0){
+
+showError("mxn-error",true);
+return;
+
+}
+
+showError("mxn-error",false);
+
+document.getElementById("mxn-result").textContent=
+(usd*rate).toLocaleString("es-MX",{
+style:"currency",
+currency:"MXN"
+});
+
+document.getElementById("results-mxn").classList.add("show");
+
+}
+
+</script>
+
 </body>
 </html>
