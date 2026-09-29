@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iyerug.github.io/worktools-usa/sitemap.xml
